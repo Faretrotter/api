@@ -1,238 +1,248 @@
 #%RAML 1.0
-annotationTypes:
-  oas-summary:
-    allowedTargets: Method
-    type: string
 title: Faretrotter Travel API
 description: Multimodal travel API to return modes of transportation between cities and points of interest.
-version: 2.0.0
+version: 2.0
 protocols:
   - HTTPS
-baseUriParameters:
-  apikey: {}
-baseUri: 'https://api.faretrotter.com/v2/{apikey}'
+baseUri: 'https://api.faretrotter.com/v2.0/{apikey}'
 securitySchemes:
   ApiKeyAuth:
     type: Pass Through
+annotationTypes:
+  oas-summary:
+    type: string
+    allowedTargets: Method
+types:
+  RoutesResponse:
+    displayName: Routes response
+    type: object
+    properties:
+      request:
+        displayName: request
+        type: RoutesRequest
+      status:
+        displayName: status
+        type: Status
+      routes:
+        displayName: routes
+        type: array
+        items:
+            type: Route
+      response:
+        displayName: response
+        type: RouteResp
+      places:
+        displayName: places
+        type: array
+        items:
+            type: Place
+      operators:
+        displayName: operators
+        type: array
+        items:
+          type: Operator
+  PlacesResponse:
+    displayName: Places response
+    type: object
+    properties:
+      request:
+        displayName: request
+        type: PlacesRequest
+      status:
+        displayName: status
+        type: Status
+      places:
+        displayName: places
+        type: array
+        items:
+            type: Place
+  PlacesRequestResponse:
+    displayName: Places Request Response
+    type: object
+    properties:
+      input_text:
+        displayName: input_text
+        type: String
+      lat:
+        displayName: lat
+        type: Number
+        required: false
+      lng:
+        displayName: lng
+        type: Number
+        required: false
+  RouteResponse:
+    displayName: Route Response
+    type: object
+    properties:
+      origin_place_id:
+        displayName: origin_place_id
+        type: String
+      destination_place_id:
+        displayName: destination_place_id
+        type: String
+      mode:
+        displayName: mode
+        type: String
+      fare:
+        displayName: fare
+        type: Number
+      duration:
+        displayName: duration
+        type: Integer
+      operator_id:
+        displayName: operator_id
+        type: String
+      co2:
+        displayName: co2
+        type: Number
+      segments:
+        displayName: segments
+        type: array
+        items:
+            type:Segment
+  RoutesRequestResponse:
+    displayName: Routes Request Response
+    type: object
+    properties:
+      origin_lat:
+        displayName: origin_lat
+        type: Number
+      origin_lng:
+        displayName: origin_lng
+        type: Number
+      destination_lat:
+        displayName: destination_lat
+        type: Number
+      origin_lng:
+        displayName: destination_lng
+        type: Number
+      modes:
+        displayName: modes
+        type: String
+      curr:
+        displayName: curr
+        type: String
+  StatusResponse:
+    displayName: Status Response
+    type: object
+    properties:
+      code:
+        displayName: code
+        type: String
+      message:
+        displayName: message
+        type: String
+  RouteRespResponse:
+    displayName: Route Resp Response
+    type: object
+    properties:
+      url:
+        displayName: url
+        type: Coord 
+  SegmentResponse:
+    displayName: Segment Response
+    type: object
+    properties:
+      origin_id:
+        displayName: origin_id
+        type: String 
+      destination_id:
+        displayName: origin_id
+        type: String 
+      duration:
+        displayName: duration
+        type: Integer 
+      mode:
+        displayName: mode
+        type: String 
+      name:
+        displayName: name
+        type: String 
+      operator_id:
+        displayName: operator_id
+        type: String 
+  OperatorResponse:
+    displayName: Operator Response
+    type: object
+    properties:
+      id:
+        displayName: id
+        type: Coord
+      name:
+        displayName: name
+        type: String
+      logo_img:
+        displayName: logo_img
+        type: String
+      mode:
+        displayName: mode
+        type: String
+      code:
+        displayName: code
+        type: String
+  PlaceResponse:
+    displayName: Place Response
+    type: object
+    properties:
+      id:
+        displayName: id
+        type: String
+      name:
+        displayName: name
+        type: String
+      name_long:
+        displayName: name_long
+        type: String
+      city:
+        displayName: city
+        type: String
+      region:
+        displayName: region
+        type: String
+      country:
+        displayName: country
+        type: String
+      type:
+        displayName: type
+        type: String
+      slug:
+        displayName: slug
+        type: String
+      lat:
+        displayName: lat
+        type: Number
+      lng:
+        displayName: lng
+        type: Number
+      geoname_id:
+        displayName: coord
+        type: String
 /routes:
   get:
     responses:
-      '200':
-        description: Modes of transportation between two cities.
-        body:
-          application/json:
-            example:
-              request:
-                environment: api-dev
-                version: '2.0'
-                endpoint: routes
-                fields:
-                  origin_lat: 34.0156082
-                  origin_lng: -118.68505
-                  destination_lat: 37.7576793
-                  destination_lng: -122.5076401
-                  curr: USD
-              status:
-                code: '200'
-                message: OK
-              response:
-                url: 'https://www.faretrotter.com/en/travel/new-york-city-ny-us/boston-ma-us'
-              routes:
-                - origin_id: '1'
-                  destination_id: '6'
-                  mode: bus
-                  fare: 24
-                  duration: 27900
-                  operator_id: '1'
-                  co2: '20.88'
-                  segments: []
-                - origin_id: '2'
-                  destination_id: '7'
-                  mode: bus
-                  fare: '32'
-                  duration: 29200
-                  operator_id: '2'
-                  co2: '27.84'
-                  segments: []
-                - origin_id: '3'
-                  destination_id: '8'
-                  mode: train
-                  fare: '80'
-                  duration: 19530
-                  operator_id: '3'
-                  co2: '69.6'
-                  segments:
-                    - origin_id: '3'
-                      destination_id: '8'
-                      mode: train
-                      name: Coast Starlight
-                      duration: 19530
-                      operator_id: '3'
-                - origin_id: '4'
-                  destination_id: '9'
-                  mode: flight
-                  fare: '120'
-                  duration: 4500
-                  operator_id: '4'
-                  co2: '104.4'
-                  segments: []
-                - origin_id: '4'
-                  destination_id: '9'
-                  mode: flight
-                  fare: '190'
-                  duration: 4500
-                  operator_id: '5'
-                  co2: '165.3'
-                  segments: []
-                - origin_id: '4'
-                  destination_id: '10'
-                  mode: flight
-                  fare: '210'
-                  duration: 4500
-                  operator_id: '6'
-                  co2: '182.7'
-                  segments: []
-                - origin_id: '4'
-                  destination_id: '10'
-                  mode: flight
-                  fare: '221'
-                  duration: 4500
-                  operator_id: '7'
-                  co2: '192.27'
-                  segments: []
-                - origin_id: '5'
-                  destination_id: '11'
-                  mode: drive
-                  fare: '61'
-                  duration: 31341
-                  operator_id: '8'
-                  co2: '53.07'
-                  segments: []
-              places:
-                - id: '1'
-                  name: Los Angeles Greyhound Station
-                  name_long: ''
-                  city: Los Angeles
-                  region: CA
-                  country: US
-                  lat: 34.034458
-                  lng: -118.23555
-                  geoname_id: ''
-                - id: '2'
-                  name: Los Angeles Megabus Station
-                  name_long: ''
-                  city: Los Angeles
-                  region: CA
-                  country: US
-                  lat: 34.0520410669
-                  lng: -118.243272703
-                  geoname_id: ''
-                - id: '3'
-                  name: LAX
-                  name_long: Los Angeles Union Station
-                  city: Los Angeles
-                  region: CA
-                  country: US
-                  lat: 34.0562
-                  lng: -118.237
-                  geoname_id: ''
-                - id: '4'
-                  name: LAX
-                  name_long: Los Angeles International Airport
-                  city: Los Angeles
-                  region: CA
-                  country: US
-                  lat: 33.942536
-                  lng: -118.408075
-                  geoname_id: ''
-                - id: '5'
-                  name: request_origin
-                  name_long: ''
-                  city: ''
-                  region: ''
-                  country: ''
-                  lat: 34.0156082
-                  lng: -118.68505
-                  geoname_id: ''
-                - id: '6'
-                  name: San Francisco Greyhound Station
-                  name_long: ''
-                  city: San Francisco
-                  region: CA
-                  country: US
-                  lat: 37.78924
-                  lng: -122.39224
-                  geoname_id: ''
-                - id: '7'
-                  name: San Francisco Megabus Station
-                  name_long: ''
-                  city: San Francisco
-                  region: CA
-                  country: US
-                  lat: 37.77497
-                  lng: -122.398526
-                  geoname_id: ''
-                - id: '8'
-                  name: OAC
-                  name_long: Oakland Coliseum
-                  city: Oakland
-                  region: CA
-                  country: US
-                  lat: 37.7525
-                  lng: -122.198
-                  geoname_id: ''
-                - id: '9'
-                  name: SFO
-                  name_long: San Francisco International Airport
-                  city: San Francisco
-                  region: CA
-                  country: US
-                  lat: 37.618972
-                  lng: -122.374889
-                  geoname_id: ''
-                - id: '10'
-                  name: OAK
-                  name_long: Metropolitan Oakland Intl
-                  city: Oakland
-                  region: CA
-                  country: US
-                  lat: 37.721278
-                  lng: -122.220722
-                  geoname_id: ''
-                - id: '11'
-                  name: request_destination
-                  name_long: ''
-                  city: ''
-                  region: ''
-                  country: ''
-                  lat: 37.7576793
-                  lng: -122.5076401
-                  geoname_id: ''
-              operators:
-                - id: '1'
-                  name: Bus Company 1
-                  logo_img: /img/operators/bc1.png
-                  mode: bus
-                  code: ''
-                  attributes:
-                    website: 'https://www.example.com'
-                    twitter: '@example'
-            type: array
-      '400':
+       200:
+          description: Everything worked as expected.
+          body:
+              application/json:
+                displayName: response
+                description: Successful routes response
+                type: RoutesResponse
+       400:
         description: Parameters did not match the endpoint requirements. Check that all required fields are present and spelt correctly.
-      '401':
+       401:
         description: Authentication Failed.
-      '402':
+       402:
         description: All parameters are correct but the request failed.
-      '403':
+       403:
         description: Request IP does not match IP address registered with key.
-      '404':
+       404:
         description: The endpoint doesn't exist.
-      '429':
+       429:
         description: Too many requests hit the API too quickly.
-      '501':
+       501:
         description: Server error
-      '502':
+       502:
         description: Server error
     (oas-summary): Returns possible modes of transportation between two cities.
   uriParameters:
@@ -253,8 +263,13 @@ securitySchemes:
 /places:
   get:
     responses:
-      '200':
-        description: Everythings worked as expected.
+      200:
+          description: Everything worked as expected.
+          body:
+              application/json:
+                displayName: response
+                description: Successful routes response
+                type: PlaceResponse
       '400':
         description: Parameters did not match the endpoint requirements. Check that all required fields are present and spelt correctly.
       '401':
