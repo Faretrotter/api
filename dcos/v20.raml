@@ -1,0 +1,81 @@
+#%RAML 1.0
+title: Faretrotter Travel API
+description: Multimodal travel API to return modes of transportation between cities and points of interest.
+version: 2.0.0
+protocols:
+  - HTTPS
+baseUri: 'https://api.faretrotter.com/v2/{apikey}'
+securitySchemes:
+  ApiKeyAuth:
+    type: Pass Through
+annotationTypes:
+  oas-summary:
+    type: string
+    allowedTargets: Method
+/routes:
+  get:
+    responses:
+      '200':
+        description: Everything worked as expected.
+      '400':
+        description: Parameters did not match the endpoint requirements. Check that all required fields are present and spelt correctly.
+      '401':
+        description: Authentication Failed.
+      '402':
+        description: All parameters are correct but the request failed.
+      '403':
+        description: Request IP does not match IP address registered with key.
+      '404':
+        description: The endpoint doesn't exist.
+      '429':
+        description: Too many requests hit the API too quickly.
+      '501':
+        description: Server error
+      '502':
+        description: Server error
+    (oas-summary): Returns possible modes of transportation between two cities.
+  uriParameters:
+    origin_lat:
+      type: number
+    origin_lng:
+      type: number
+    destination_lat:
+      type: number
+    destination_lng:
+      type: number
+    modes:
+      required: false
+      type: string
+    curr:
+      required: false
+      type: string
+/places:
+  get:
+    responses:
+      '200':
+        description: Everything worked as expected.
+      '400':
+        description: Parameters did not match the endpoint requirements. Check that all required fields are present and spelt correctly.
+      '401':
+        description: Authentication Failed.
+      '402':
+        description: All parameters are correct but the request failed.
+      '403':
+        description: Request IP does not match IP address registered with key.
+      '404':
+        description: The endpoint doesn't exist.
+      '429':
+        description: Too many requests hit the API too quickly.
+      '501':
+        description: Server error
+      '502':
+        description: Server error
+    (oas-summary): Returns possible modes of transportation between two cities.
+  uriParameters:
+    input_text:
+      type: string
+      required:false
+    lng:
+      type: number
+    lat:
+      type: number
