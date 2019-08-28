@@ -12,6 +12,7 @@ For access, [register here](https://www.faretrotter.com/api/register).
 - Documentation page with basic examples
 - Operator response information
 - CO2 emissions calculations included
+- Inlcuded [.raml documentation](https://github.com/Faretrotter/api/tree/master/docs)
 
 ### Changed
 - Routes endpoint include every option across operators/agencies, not just each individual mode
