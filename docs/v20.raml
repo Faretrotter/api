@@ -1,275 +1,176 @@
 #%RAML 1.0
 title: Faretrotter Travel API
 description: Multimodal travel API to return modes of transportation between cities and points of interest.
-version: 2.0
+version: '2.0'
 protocols:
   - HTTPS
-baseUri: 'https://api.faretrotter.com/v2.0/{apikey}'
+baseUri: 'https://api.faretrotter.com/v2.0/99c7793d4dd08acb4b78456e5c3cc9a5358cbf1e'
 securitySchemes:
   ApiKeyAuth:
     type: Pass Through
+    describedBy:
+      headers:
+        ApiKeyAuth:
+          type: string
 annotationTypes:
+  oas-schema-title:
+    type: string
+    allowedTargets: TypeDeclaration
   oas-summary:
     type: string
     allowedTargets: Method
 types:
-  RoutesResponse:
-    displayName: Routes response
-    type: object
-    properties:
-      request:
-        displayName: request
-        type: RoutesRequest
-      status:
-        displayName: status
-        type: Status
-      routes:
-        displayName: routes
-        type: array
-        items:
-            type: Route
-      response:
-        displayName: response
-        type: RouteResp
-      places:
-        displayName: places
-        type: array
-        items:
-            type: Place
-      operators:
-        displayName: operators
-        type: array
-        items:
-          type: Operator
-  PlacesResponse:
-    displayName: Places response
-    type: object
-    properties:
-      request:
-        displayName: request
-        type: PlacesRequest
-      status:
-        displayName: status
-        type: Status
-      places:
-        displayName: places
-        type: array
-        items:
-            type: Place
-  PlacesRequestResponse:
-    displayName: Places Request Response
-    type: object
-    properties:
-      input_text:
-        displayName: input_text
-        type: String
-      lat:
-        displayName: lat
-        type: Number
-        required: false
-      lng:
-        displayName: lng
-        type: Number
-        required: false
-  RouteResponse:
-    displayName: Route Response
-    type: object
-    properties:
-      origin_place_id:
-        displayName: origin_place_id
-        type: String
-      destination_place_id:
-        displayName: destination_place_id
-        type: String
-      mode:
-        displayName: mode
-        type: String
-      fare:
-        displayName: fare
-        type: Number
-      duration:
-        displayName: duration
-        type: Integer
-      operator_id:
-        displayName: operator_id
-        type: String
-      co2:
-        displayName: co2
-        type: Number
-      segments:
-        displayName: segments
-        type: array
-        items:
-            type:Segment
-  RoutesRequestResponse:
-    displayName: Routes Request Response
-    type: object
-    properties:
-      origin_lat:
-        displayName: origin_lat
-        type: Number
-      origin_lng:
-        displayName: origin_lng
-        type: Number
-      destination_lat:
-        displayName: destination_lat
-        type: Number
-      origin_lng:
-        displayName: destination_lng
-        type: Number
-      modes:
-        displayName: modes
-        type: String
-      curr:
-        displayName: curr
-        type: String
-  StatusResponse:
-    displayName: Status Response
-    type: object
-    properties:
-      code:
-        displayName: code
-        type: String
-      message:
-        displayName: message
-        type: String
-  RouteRespResponse:
-    displayName: Route Resp Response
-    type: object
-    properties:
-      url:
-        displayName: url
-        type: Coord 
-  SegmentResponse:
-    displayName: Segment Response
-    type: object
-    properties:
-      origin_id:
-        displayName: origin_id
-        type: String 
-      destination_id:
-        displayName: origin_id
-        type: String 
-      duration:
-        displayName: duration
-        type: Integer 
-      mode:
-        displayName: mode
-        type: String 
-      name:
-        displayName: name
-        type: String 
-      operator_id:
-        displayName: operator_id
-        type: String 
-  OperatorResponse:
-    displayName: Operator Response
-    type: object
-    properties:
-      id:
-        displayName: id
-        type: Coord
-      name:
-        displayName: name
-        type: String
-      logo_img:
-        displayName: logo_img
-        type: String
-      mode:
-        displayName: mode
-        type: String
-      code:
-        displayName: code
-        type: String
   PlaceResponse:
-    displayName: Place Response
-    type: object
     properties:
       id:
-        displayName: id
-        type: String
+        type: string
       name:
-        displayName: name
-        type: String
+        type: string
       name_long:
-        displayName: name_long
-        type: String
+        type: string
       city:
-        displayName: city
-        type: String
+        type: string
       region:
-        displayName: region
-        type: String
+        type: string
       country:
-        displayName: country
-        type: String
+        type: string
       type:
-        displayName: type
-        type: String
+        type: string
       slug:
-        displayName: slug
-        type: String
+        type: string
       lat:
-        displayName: lat
-        type: Number
+        type: number
       lng:
-        displayName: lng
-        type: Number
+        type: number
       geoname_id:
-        displayName: coord
-        type: String
-/routes:
-  get:
-    responses:
-       200:
-          description: Everything worked as expected.
-          body:
-              application/json:
-                displayName: response
-                description: Successful routes response
-                type: RoutesResponse
-       400:
-        description: Parameters did not match the endpoint requirements. Check that all required fields are present and spelt correctly.
-       401:
-        description: Authentication Failed.
-       402:
-        description: All parameters are correct but the request failed.
-       403:
-        description: Request IP does not match IP address registered with key.
-       404:
-        description: The endpoint doesn't exist.
-       429:
-        description: Too many requests hit the API too quickly.
-       501:
-        description: Server error
-       502:
-        description: Server error
-    (oas-summary): Returns possible modes of transportation between two cities.
-  uriParameters:
-    origin_lat:
-      type: number
-    origin_lng:
-      type: number
-    destination_lat:
-      type: number
-    destination_lng:
-      type: number
-    modes:
-      required: false
-      type: string
-    curr:
-      required: false
-      type: string
+        type: string
+    (oas-schema-title): Place response
+  PlacesResponse:
+    properties:
+      status:
+        type: object
+        properties:
+          code:
+            type: number
+          message:
+            type: string
+      request:
+        type: object
+        properties:
+          environment:
+            type: string
+          version:
+            type: string
+          endpoint:
+            type: string
+          fields:
+            type: object
+            properties:
+              origin_lat:
+                type: number
+              origin_lng:
+                type: number
+              destination_lat:
+                type: number
+              destination_lng:
+                type: number
+          distance_miles:
+            type: number
+      places:
+        type: array
+        items:
+          type: PlaceResponse
+    (oas-schema-title): Places response
+  RoutesResponse:
+    properties:
+      status:
+        type: object
+        properties:
+          code:
+            type: number
+          message:
+            type: string
+      request:
+        type: object
+        properties:
+          environment:
+            type: string
+          version:
+            type: string
+          endpoint:
+            type: string
+          fields:
+            type: object
+            properties:
+              origin_lat:
+                type: number
+              origin_lng:
+                type: number
+              destination_lat:
+                type: number
+              destination_lng:
+                type: number
+          distance_miles:
+            type: number
+      data:
+        properties:
+          routes:
+            type: array
+            items:
+              type: object
+              properties:
+                origin_id:
+                  type: string
+                destination_id:
+                  type: string
+                mode:
+                  type: string
+                fare:
+                  type: number
+                duration:
+                  type: number
+                co2:
+                  type: number
+          places:
+            type: array
+            items:
+              type: PlaceResponse
+          operators:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                logo_img:
+                  type: string
+                mode:
+                  type: string
+                code:
+                  type: string
+                attributes:
+                  type: array
+                  items:
+                    type: string
+      response:
+        type: object
+        properties:
+          url:
+            type: string
+          time:
+            type: number
+    (oas-schema-title): Routes response
 /places:
   get:
+    displayName: GET_places
     responses:
-      200:
-          description: Everything worked as expected.
-          body:
-              application/json:
-                displayName: response
-                description: Successful routes response
-                type: PlaceResponse
+      '200':
+        description: Everything worked as expected.
+        body:
+          application/json:
+            type: PlaceResponse
       '400':
         description: Parameters did not match the endpoint requirements. Check that all required fields are present and spelt correctly.
       '401':
@@ -287,10 +188,36 @@ types:
       '502':
         description: Server error
     (oas-summary): Returns possible modes of transportation between two cities.
-  uriParameters:
-    input_text:
-      type: string
-    lng:
-      type: number
-    lat:
-      type: number
+/routes:
+  get:
+    responses:
+      '200':
+        description: Everything worked as expected.
+        body:
+          application/json:
+            type: RoutesResponse
+      '400':
+        description: Parameters did not match the endpoint requirements. Check that all required fields are present and spelt correctly.
+      '401':
+        description: Authentication Failed.
+      '402':
+        description: All parameters are correct but the request failed.
+      '403':
+        description: Request IP does not match IP address registered with key.
+      '404':
+        description: The endpoint doesn't exist.
+      '429':
+        description: Too many requests hit the API too quickly.
+      '501':
+        description: Server error
+      '502':
+        description: Server error
+    queryParameters:
+      origin_lat:
+        type: number
+      origin_lng:
+        type: number
+      destination_lat:
+        type: number
+      destination_lng:
+        type: number
