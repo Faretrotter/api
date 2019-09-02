@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://api.faretrotter.com/v2.0/99c7793d4dd08acb4b78456e5c3cc9a5358cbf1e"
+      "url": "https://api.faretrotter.com/v2.0/{apikey}"
     }
   ],
   "paths": {
