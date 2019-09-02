@@ -6,7 +6,7 @@
     "version": "2.0"
   },
   "host": "api.faretrotter.com",
-  "basePath": "/v2.0/99c7793d4dd08acb4b78456e5c3cc9a5358cbf1e",
+  "basePath": "/v2.0/{apikey}",
   "schemes": [
     "https"
   ],
